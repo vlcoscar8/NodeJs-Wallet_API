@@ -7,6 +7,7 @@ import {
     getUserDetail,
     sendMoney,
     receiveMoney,
+    getAllUsers,
 } from "../controller/user.controller.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.post("/register", registerUser);
 router.post("/login", logInUser);
 router.post("/logout", logOutUser);
 router.get("/:id", getUserDetail);
+router.get("/", getAllUsers);
 router.post("/send", [isAuth], sendMoney);
 router.put("/receive/:id", [isAuth], receiveMoney);
 
