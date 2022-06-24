@@ -1,0 +1,19 @@
+{
+  "name": "wallet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlcoscar8/NodeJs-Wallet_API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlcoscar8/NodeJs-Wallet_API/issues"
+  },
+  "homepage": "https://github.com/vlcoscar8/NodeJs-Wallet_API#readme"
+}
