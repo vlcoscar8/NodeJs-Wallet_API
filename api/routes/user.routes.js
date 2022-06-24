@@ -1,4 +1,5 @@
 import express from "express";
+import { isAuth } from "../../auth/auth.js";
 import {
     registerUser,
     logInUser,
@@ -14,7 +15,7 @@ router.post("/register", registerUser);
 router.post("/login", logInUser);
 router.post("/logout", logOutUser);
 router.get("/:id", getUserDetail);
-router.post("/send", sendMoney);
-router.put("/receive/:id", receiveMoney);
+router.post("/send", [isAuth], sendMoney);
+router.put("/receive/:id", [isAuth], receiveMoney);
 
 export { router as userRouter };

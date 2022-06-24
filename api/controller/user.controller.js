@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { send } from "process";
 import { Movement } from "../models/movements.model.js";
 import { User } from "../models/user.model.js";
 
