@@ -19,6 +19,7 @@ const movementSchema = new Schema({
     ],
     type: { type: String, required: true },
     amount: { type: Number, required: true },
+    currentCash: { type: Number, required: true },
 });
 
 const Movement = mongoose.model("Movement", movementSchema);

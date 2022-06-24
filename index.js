@@ -4,14 +4,16 @@ import session from "express-session";
 import MongoStore from "connect-mongo";
 import cors from "cors";
 import { connect } from "./config/db.js";
+import { userRouter } from "./api/routes/user.routes.js";
 
 // Config API
 dotenv.config();
 const server = express();
 const router = express.Router();
 const PORT = process.env.PORT;
+const DB_URL = process.env.DB_URL;
 const SESSION_SECRET = process.env.SESSION_SECRET;
-
+server.set("secretKey", "nodeRestApi");
 //Cors
 server.use(
     cors({
@@ -26,7 +28,7 @@ server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 
 // Session users Mongo
-server.set("secretKey", "nodeRestApi");
+
 server.use(
     session({
         secret: SESSION_SECRET,
@@ -43,7 +45,7 @@ server.use(
 
 // Routes
 server.use("/", router);
-// server.use("/", avatarRouter);
+server.use("/user", userRouter);
 
 //Errors
 server.use("*", (req, res, next) => {
