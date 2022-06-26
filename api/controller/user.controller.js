@@ -98,7 +98,9 @@ const getUserDetail = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const user = await User.findById(id).populate("movements");
+        const user = await User.findById(id)
+            .populate("movements")
+            .populate("friends");
 
         return res.status(200).json(user);
     } catch (error) {
@@ -208,6 +210,48 @@ const getAllUsers = async (req, res, next) => {
     }
 };
 
+const addFriend = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { friendUsername } = req.body;
+
+        const friend = await User.findOne({ username: friendUsername });
+
+        await User.findByIdAndUpdate(id, {
+            $push: {
+                friends: friend,
+            },
+        });
+
+        const userUpdated = await User.findById(id);
+
+        res.status(200).json(userUpdated);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const removeFriend = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { friendUsername } = req.body;
+
+        const friend = await User.findOne({ username: friendUsername });
+
+        await User.findByIdAndUpdate(id, {
+            $pull: {
+                friends: friend.id,
+            },
+        });
+
+        const userUpdated = await User.findById(id);
+
+        res.status(200).json(userUpdated);
+    } catch (error) {
+        next(error);
+    }
+};
+
 export {
     registerUser,
     logInUser,
@@ -216,4 +260,6 @@ export {
     sendMoney,
     receiveMoney,
     getAllUsers,
+    addFriend,
+    removeFriend,
 };

@@ -7,6 +7,12 @@ const userSchema = new Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     cash: { type: Number },
+    friends: [
+        {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+        },
+    ],
     movements: [
         {
             type: mongoose.Types.ObjectId,
