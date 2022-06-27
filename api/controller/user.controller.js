@@ -217,14 +217,14 @@ const addFriend = async (req, res, next) => {
 
         const friend = await User.findOne({ username: friendUsername });
 
+        if (!friend) {
+            return res.status(404).json("User doesn't exist");
+        }
+
         const curretUser = await User.findById(id);
 
         if (curretUser.friends.includes(friend.id)) {
             return res.status(404).json("The friend is already added");
-        }
-
-        if (!friend) {
-            return res.status(404).json("User doesn't exist");
         }
 
         await User.findByIdAndUpdate(id, {
