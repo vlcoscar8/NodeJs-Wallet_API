@@ -217,9 +217,9 @@ const addFriend = async (req, res, next) => {
 
         const friend = await User.findOne({ username: friendUsername });
 
-        const curretUser = await User.findById(id).populate("friends");
+        const curretUser = await User.findById(id);
 
-        if (curretUser.friends.includes(friend)) {
+        if (curretUser.friends.includes(friend.id)) {
             return res.status(404).json("The friend is already added");
         }
 
