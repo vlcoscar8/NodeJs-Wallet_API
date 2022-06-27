@@ -217,6 +217,10 @@ const addFriend = async (req, res, next) => {
 
         const friend = await User.findOne({ username: friendUsername });
 
+        if (!friend) {
+            return res.status(404).json("User doesn't exist");
+        }
+
         await User.findByIdAndUpdate(id, {
             $push: {
                 friends: friend,
@@ -237,6 +241,10 @@ const removeFriend = async (req, res, next) => {
         const { friendUsername } = req.body;
 
         const friend = await User.findOne({ username: friendUsername });
+
+        if (!friend) {
+            return res.status(404).json("User doesn't exist");
+        }
 
         await User.findByIdAndUpdate(id, {
             $pull: {
