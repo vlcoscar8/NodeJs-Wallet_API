@@ -202,7 +202,11 @@ const receiveMoney = async (req, res, next) => {
 
         const currentUser = await User.findById(id);
 
-        const bank = await Bank.find({});
+        const newBank = new Bank({
+            username: "Bank",
+        });
+
+        const bank = await Bank.findById(newBank._id);
 
         //Create new receive Movement
         const newReceiveMovement = new Movement({
