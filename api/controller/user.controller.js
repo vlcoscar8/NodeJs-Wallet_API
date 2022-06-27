@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Bank } from "../models/bank.model.js";
 import { Movement } from "../models/movements.model.js";
 import { User } from "../models/user.model.js";
 
@@ -201,13 +202,14 @@ const receiveMoney = async (req, res, next) => {
 
         const currentUser = await User.findById(id);
 
+        const bank = await Bank.find({});
+
         //Create new receive Movement
         const newReceiveMovement = new Movement({
-            from: [{ username: "Bank" }],
+            from: bank,
             to: currentUser,
             type: "receive",
             amount: amount,
-            currentCash: currentUser.cash,
         });
 
         await newReceiveMovement.save();
