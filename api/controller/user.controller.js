@@ -99,8 +99,21 @@ const getUserDetail = async (req, res, next) => {
         const { id } = req.params;
 
         const user = await User.findById(id)
-            .populate("movements")
-            .populate("friends");
+            .populate("friends")
+            .populate({
+                path: "movements",
+                model: Movement,
+                populate: [
+                    {
+                        path: "from",
+                        model: User,
+                    },
+                    {
+                        path: "to",
+                        model: User,
+                    },
+                ],
+            });
 
         return res.status(200).json(user);
     } catch (error) {
