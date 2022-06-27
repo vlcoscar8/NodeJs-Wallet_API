@@ -210,6 +210,7 @@ const receiveMoney = async (req, res, next) => {
             to: currentUser,
             type: "receive",
             amount: amount,
+            currentCash: currentUser.cash,
         });
 
         await newReceiveMovement.save();
