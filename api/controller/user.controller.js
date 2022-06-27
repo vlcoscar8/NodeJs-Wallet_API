@@ -201,8 +201,27 @@ const receiveMoney = async (req, res, next) => {
 
         const currentUser = await User.findById(id);
 
+        //Create new receive Movement
+        const newReceiveMovement = new Movement({
+            from: [{ username: "Bank" }],
+            to: currentUser,
+            type: "receive",
+            amount: amount,
+            currentCash: currentUser.cash,
+        });
+
+        await newReceiveMovement.save();
+
+        const receiveMovement = await Movement.findById(newReceiveMovement._id);
+
         await User.findByIdAndUpdate(id, {
             cash: currentUser.cash + amount,
+        });
+
+        await User.findByIdAndUpdate(id, {
+            $push: {
+                movements: receiveMovement,
+            },
         });
 
         const userUpdated = await User.findById(id);
